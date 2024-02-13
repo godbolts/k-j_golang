@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>art-interface</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="/static/style.css">
+</head>
+<body>
+    <h1>Art-interface</h1>
+    <p class="notice">A simple tool for manipulating digital art. The tool works by combining or dividing repetitive symbols. By default, the tool is set to decoding.</p>
+    <form action="/decoder" method="POST">
+            <input type="checkbox" id="encodeCheckbox" name="Encode">
+            <label for="encodeCheckbox">Encode</label><br>
+        </details>
+        <p>
+            <label for="inputText">Insert the text into this box:</label>
+            <textarea rows="10" id="textID" name="inputText" required cols="500"></textarea>
+            <div>
+            <input type="submit" value="Generate">
+            </div>
+        </p>
+    </form>
+    <article>
+        <h3>The product of the tool:</h3>
+        <pre>
+        <p>{{ . }}</p>
+        </pre>
+    </article>
+</body>
+</html>
