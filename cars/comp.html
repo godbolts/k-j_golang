@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Model Comparison</title>
+    <link rel="stylesheet" type="text/css" href="/static/style.css">
+    <style>
+        .model {
+            width: 45%;
+            float: left;
+            margin: 2.5%;
+            padding: 20px;
+            box-sizing: border-box;
+            border: 1px solid #ffb300;
+            border-radius: 10px;
+        }
+        .model img {
+            width: 100%;
+        }
+        .clear {
+            clear: both;
+        }
+        .comparison-table {
+            width: 100%;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            border-collapse: collapse;
+        }
+        .comparison-table th, .comparison-table td {
+            border: 1px solid #ffb300;
+            padding: 10px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <h1>Model Comparison</h1>
+    <div style="display: flex; flex-wrap: wrap;">
+    <div class="model">
+        <h2>{{ .ModelA.name }}</h2>
+        <img src="{{ .APIHost }}{{ .ModelA.image }}" alt="{{ .ModelA.name }}">
+    </div>
+    <div class="model">
+        <h2>{{ .ModelB.name }}</h2>
+        <img src="{{ .APIHost }}{{ .ModelB.image }}" alt="{{ .ModelB.name }}">
+        </div>
+    <div class="clear"></div>
+</div>
+    <table class="comparison-table">
+        <thead>
+            <tr>
+                <th><strong>Feature</strong></th>
+                <th>{{ .ModelA.name }}</th>
+                <th>{{ .ModelB.name }}</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>Year</strong></td>
+                <td>{{ .ModelA.year }}</td>
+                <td>{{ .ModelB.year }}</td>
+            </tr>
+            <tr>
+                <td><strong>Horsepower</strong></td>
+                <td>{{ .ModelA.specifications.horsepower }}</td>
+                <td>{{ .ModelB.specifications.horsepower }}</td>
+            </tr>
+            <tr>
+                <td><strong>Engine</strong></td>
+                <td>{{ .ModelA.specifications.engine }}</td>
+                <td>{{ .ModelB.specifications.engine }}</td>
+            </tr>
+            <tr>
+                <td><strong>Transmission</strong></td>
+                <td>{{ .ModelA.specifications.transmission }}</td>
+                <td>{{ .ModelB.specifications.transmission }}</td>
+            </tr>
+
+            <tr>
+                <td><strong>Drivetrain</strong></td>
+                <td>{{ .ModelA.specifications.drivetrain }}</td>
+                <td>{{ .ModelB.specifications.drivetrain }}</td>
+            </tr>
+        </tbody>
+    </table>
+    <a href="/"><button><strong>Return to Home</strong></button></a>
+    <a href="/list"><button><strong>Return to List</strong></button></a>
+</body>
+</html>

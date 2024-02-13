@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Result</title>
+    <style>
+
+.modal {
+            display: none; 
+            position: fixed; 
+            z-index: 1; 
+            left: 0;
+            top: 0;
+            width: 100%; 
+            height: 100%; 
+            overflow: auto;
+            background-color: rgb(0,0,0); 
+            background-color: rgba(0,0,0,1); 
+        }
+
+        .modal-content {
+            background-color: #fefefe09;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+        }
+
+        .close {
+            color: #e40606;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        
+        .highlight {
+            color: rgb(106, 106, 231);
+            text-decoration: underline;
+            cursor: pointer;
+        }
+        #myModalCar, #myModalMan {
+            display: none;
+        }
+    </style>
+    <link rel="stylesheet" type="text/css" href="/static/style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+    
+    function showManufacturer(name, country, foundingYear, id) {
+        var modal = document.getElementById("myModalMan");
+        var span = modal.getElementsByClassName("close")[0];
+
+        document.getElementById("modalManName").innerText = name;
+        document.getElementById("modalCountry").innerText = "Country: " + country;
+        document.getElementById("modalManYear").innerText = "Founding Year: " + foundingYear;
+
+        modal.style.display = "block";
+
+        span.onclick = function() {
+            modal.style.display = "none";
+        }
+
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+        fetch('/list/incrementCount', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ id: id }),
+    });
+    }
+
+    function showDetails(name, year, engine, horsepower, transmission, drivetrain, id) {
+        var modal = document.getElementById("myModalCar");
+        var span = modal.getElementsByClassName("close")[0];
+
+        document.getElementById("modalCarName").innerText = name;
+        document.getElementById("modalCarYear").innerText = "Year: " + year;
+        document.getElementById("modalEngine").innerText = "Engine: " + engine;
+        document.getElementById("modalHorsepower").innerText = "Horsepower: " + horsepower;
+        document.getElementById("modalTransmission").innerText = "Transmission: " + transmission;
+        document.getElementById("modalDrivetrain").innerText = "Drivetrain: " + drivetrain;
+
+        modal.style.display = "block";
+
+        span.onclick = function() {
+            modal.style.display = "none";
+        }
+
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+        fetch('/list/incrementCount', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ id: id }),
+    });
+    }
+    
+    $(document).ready(function() {
+    var apiHost = "{{ .APIHost }}";
+    var limit = 2;
+
+    // Hide the "Compare" button on page load
+    var compareButton = $('button[type=submit]');
+    compareButton.prop('disabled', true); // Initially disable the button
+
+    $('input[type=checkbox]').on('change', function(e) {
+        if ($('input[type=checkbox]:checked').length > limit) {
+            this.checked = false;
+        }
+        updateCompareButtonVisibility();
+    });
+
+    function updateCompareButtonVisibility() {
+        var checkedCheckboxes = $('input[type=checkbox]:checked');
+        
+        // Enable the button if at least two checkboxes are checked, otherwise disable it
+        if (checkedCheckboxes.length >= 2) {
+            compareButton.prop('disabled', false); // Enable the button
+        } else {
+            compareButton.prop('disabled', true); // Disable the button
+        }
+    }
+    function displayImages() {
+        var images = document.getElementsByClassName('carImage');
+        for (var i = 0; i < images.length; i++) {
+            var img = images[i];
+            var imageUrl = img.getAttribute('data-img');
+            var fullImageUrl = apiHost + imageUrl;
+            console.log("Image URL:", fullImageUrl);
+            img.src = fullImageUrl;
+        }
+    }
+
+    displayImages();
+
+});
+    </script>
+</head>
+<body>
+    <div id="myModalCar" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <p id="modalCarName"></p>
+            <p id="modalCarYear"></p>
+            <p id="modalEngine"></p>
+            <p id="modalHorsepower"></p>
+            <p id="modalTransmission"></p>
+            <p id="modalDrivetrain"></p>
+        </div>
+    </div>
+    <div id="myModalMan" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <p id="modalManName"></p>
+            <p id="modalCountry"></p>
+            <p id="modalManYear"></p>
+        </div>
+    </div>
+    <h1>The Cars</h1>
+    <div class="button-container">
+        <a href="/"><button class="home-button"><strong>Return to Home</strong></button></a>
+        <form action="/list/compare" method="POST">
+        <button type="submit" class="compare-button" disabled><strong>Compare</strong> (select two)</button>
+    </div>    
+        <table>
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Name</th>
+                    <th>Manufacturer</th>
+                    <th>Category</th>
+                    <th>Compare</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{ range .ModelInfo }}
+                {{ $modelId := .id }}
+                    {{ $manufacturerId := .manufacturerId }}
+                    {{ $categoryId := .categoryId }}
+                    <tr>
+                        <td><img class="carImage" data-img="{{ .image }}" src="" alt="Image"></td>
+                        <td><span class="highlight" onclick="showDetails('{{ .name }}', '{{ .year }}', '{{ .specifications.engine }}', '{{ .specifications.horsepower }}', '{{ .specifications.transmission }}', '{{ .specifications.drivetrain }}', '{{ .id }}')">{{ .name }}</span></td>
+                        <td>
+                            {{ range $.ManufacturerInfo }}
+                                {{ if eq .id $manufacturerId }}
+                                    <span class="highlight" onclick="showManufacturer('{{ .name }}', '{{ .country }}', '{{ .foundingYear }}', '{{ $modelId }}')">{{ .name }}</span>
+                                {{ end }}
+                            {{ end }}
+                        </td>
+                        <td>
+                            {{ range $.CategoryInfo }}
+                                {{ if eq .id $categoryId }}
+                                    {{ .name }}
+                                {{ end }}
+                            {{ end }}
+                        </td>
+                        <td><input type="checkbox" name="modelIds" value="{{ .id }}"></td>
+                    </tr>
+                {{ end }}
+            </tbody>
+        </table>
+    </form>
+</body>
+</html>

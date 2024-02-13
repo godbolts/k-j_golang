@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manufacturers</title>
+    <link rel="stylesheet" type="text/css" href="/static/style.css">
+</head>
+<body>
+    <h1>The Manufacturers</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Country</th>
+                <th>Founding Year</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{ range . }}
+                <tr>
+                    <td>{{ .name }}</td>
+                    <td><img src="https://flagpedia.net/data/flags/w580/{{ .countryCode }}.webp" alt="{{ .country }} flag" width="50" height="50"></td>
+                    <td>{{ .foundingYear }}</td>
+                </tr>
+            {{ end }}
+        </tbody>
+    </table>
+    <a href="/"><button><strong>Return to Home</strong></button></a>
+</body>
+</html>
