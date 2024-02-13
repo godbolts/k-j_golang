@@ -1,6 +1,6 @@
 ## Kood/Jõhvi Golang Module
 
-In Kood/jõhvi, the first module teaches the Golang programming language. The aim is to teach the students how to construct backend programs and integrate them with simple front-end solutions. The module is divided into six tasks. The first three are individual and the last three are group tasks. The module starts with creating programs that manipulate strings and ends up with a project that expects a fully functional web tool to be created.
+In Kood/jõhvi, the first module teaches the Golang programming language. The aim is to teach the students how to construct backend programs and integrate them with simple front-end solutions. The module is divided into six tasks. The first three are individual and the last three are group tasks. The module starts with creating programs that manipulate strings and ends up with a fully functional forum website.
 
 ### First Task **The Itinerary-Prettifier**
 
