@@ -1,0 +1,80 @@
+<!-- profile.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>User Profile</title>
+    <link rel="stylesheet" href="/static/home.css">
+    <button onclick="window.location.href = '/';">Home Page</button>
+</head>
+<body>
+    <h1>User Profile</h1>
+    <h2>{{ .User.Username }}'s Profile</h2>
+    <p>Email: {{ .User.Email}}</p>
+    <p>Member since: {{ .User.DateCreated}}</p>
+    <p>About Me: {{ .About_Me }}</p>
+
+    {{ if .ItsaMe }}
+        <!-- Render edit form for about_me field if user is viewing their own profile -->
+        <form action="/edit-profile?username={{.User.Username}}" method="POST">
+            <!-- Hidden input field to hold the current URL -->
+            <input type="hidden" name="redirect_url" value="{{ .CurrentURL }}">
+
+            <label for="about_me">Edit About Me:</label><br>
+            <textarea id="about_me" name="about_me" rows="4" cols="50">{{ .About_Me }}</textarea><br>
+            <input type="submit" value="Save">
+        </form>
+
+        <h3>My Posts</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Category</th>
+                    <th>Created</th>
+                    <th>Likes</th>
+                    <th>Dislikes</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{range .MyPosts}}
+                <tr>
+                    <td><a href="/read?id={{.ID}}">{{.Title}}</a></td>
+                    <td>{{.Category}}</td>
+                    <td>{{.Created}}</td>
+                    <td>{{.Likes}}</td>
+                    <td>{{.Dislikes}}</td>
+                </tr>
+                {{end}}
+            </tbody>
+        </table>
+
+        <h3>My Liked Posts</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Category</th>
+                    <th>Creator</th>
+                    <th>Created</th>
+                    <th>Likes</th>
+                    <th>Dislikes</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{range .MyLikedPosts}}
+                <tr>
+                    <td><a href="/read?id={{.ID}}">{{.Title}}</a></td>
+                    <td>{{.Category}}</td>
+                    <td><a href="/profile?username={{.Author}}">{{.Author}}</a></td>
+                    <td>{{.Created}}</td>
+                    <td>{{.Likes}}</td>
+                    <td>{{.Dislikes}}</td>
+                </tr>
+                {{end}}
+            </tbody>
+        </table>
+
+    {{ end }}
+    <button onclick="window.location.href = '/';">Home Page</button>
+</body>
+</html>

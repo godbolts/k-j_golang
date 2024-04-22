@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lit Lions</title>
+    <link rel="stylesheet" href="/static/home.css">
+    <script src="/static/script.js" defer></script>
+    <button onclick="window.location.href = '/';">Home Page</button>
+    <script>
+        // Function to send like/dislike reaction to the server
+        function reactToPost(username, postID, type) {
+            // Create a new XMLHttpRequest object
+            var xhr = new XMLHttpRequest();
+            
+            // Configure the request
+            xhr.open("POST", "/postreaction", true);
+            xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+            
+            // Define the data to be sent
+            var data = "username=" + encodeURIComponent(username) + "&post=" + encodeURIComponent(postID) + "&type=" + encodeURIComponent(type);
+            
+            // Send the request
+            xhr.send(data);
+            
+            // Listen for state changes
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === XMLHttpRequest.DONE) {
+                    if (xhr.status === 200) {
+                        // Request successful, do something if needed
+                        console.log("Reaction added successfully.");
+                    } else {
+                        // Request failed, handle error if needed
+                        console.error("Failed to add reaction:", xhr.status);
+                    }
+                }
+            };
+        }
+        function reactAndRefresh(username, postID, type) {
+            // Call the reactToPost function
+            reactToPost(username, postID, type);
+
+            // Refresh the page after a short delay
+            setTimeout(function() {
+        location.reload();
+    }, 500); // Adjust the delay as needed
+}
+
+</script>
+</head>
+<body>
+
+<h1>LITERARY LIONS</h1>
+
+{{ $username := .User.Username }}
+
+{{ if .Message }}
+    <div class="message"><em>{{ .Message }}</em></div>
+{{ end }}
+
+{{ if .User.Username }}
+    <p>Logged in as: <a href="/profile?username={{.User.Username}}">{{.User.Username}}</a></p>
+{{ else }}
+    <p>Not logged in. Log in to post!</p>
+{{ end }}
+
+{{ if not .User.Username }}
+    <!-- Show login/registration form only if the user is not logged in -->
+    <div class="login-form">
+        <form action="/login" method="post">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required>
+
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+
+            <input type="submit" value="Login">
+            <button id="registerButton">Register</button>
+        </form>
+    </div>
+
+    <div id="registrationModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Registration Form</h2>
+            <form action="/register" method="post">
+                <label for="email">Email:</label>
+                <input type="text" id="email" name="email" required>
+
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" required>
+
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required>
+
+                <input type="submit" value="Register">
+            </form>
+        </div>
+    </div>
+{{ else }}
+
+<form action="/logout" method="post">
+    <input type="submit" value="Logout">
+</form>
+
+    <!-- Button to open posting modal -->
+    <button id="postButton">Create Post</button>
+
+    <!-- Posting modal -->
+    <div id="postingModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Create Post</h2>
+            <form action="/create-post" method="post">
+                <label for="title">Title:</label>
+                <input type="text" id="title" name="title" required>
+
+                <label for="category">Category:</label>
+                <select id="category" name="category" required>
+                    {{range .Categories}}
+                        <option value="{{.}}">{{.}}</option>
+                    {{end}}
+                </select>
+
+                <label for="content">Content:</label><br>
+                <textarea id="content" name="content" rows="5" cols="50" required></textarea>
+
+                <input type="submit" value="Submit">
+            </form>
+        </div>
+    </div>
+{{ end }}
+
+<hr class="divider">
+
+
+<!-- Container for the header and filter/search form -->
+<div class="header-container">
+    <h2 class="posts-header">Posts</h2>
+
+    <!-- Category filter and search field -->
+    <form action="/" method="post" id="filterForm" class="filter-form">
+        <label for="categoryFilter">Filter by Category:</label>
+        <select id="categoryFilter" name="category">
+            <option value="">All Categories</option>
+            {{range .Categories}}
+                <option value="{{.}}">{{.}}</option>
+            {{end}}
+        </select>
+
+        <label for="search">Search:</label>
+        <input type="text" id="search" name="search">
+
+        <input type="submit" value="Apply Filters">
+    </form>
+</div>
+<hr class="divider">
+
+<table>
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>Category</th>
+            <th>Creator</th>
+            <th>Created</th>
+            <th>Likes</th>
+            <th>Dislikes</th>
+        </tr>
+    </thead>
+    <tbody>
+        {{range .Posts}}
+        <tr>
+            <td><a href="/read?id={{.ID}}">{{.Title}}</a></td>
+            <td>{{.Category}}</td>
+            <td><a href="/profile?username={{.Author}}">{{.Author}}</a></td>
+            <td>{{.Created}}</td>
+         {{ if $username }} <!-- Check if user is logged in -->
+            <td><button id="likeButton{{ .ID }}" onclick="reactAndRefresh('{{ $username }}', '{{ .ID }}', 'like')">Like</button>{{ .Likes }}</td>
+            <td><button id="dislikeButton{{ .ID }}" onclick="reactAndRefresh('{{ $username }}', '{{ .ID }}', 'dislike')">Dislike</button>{{ .Dislikes }}</td>
+        {{ else }}
+            <td>{{ .Likes }}</td>
+            <td>{{ .Dislikes }}</td>
+        {{ end }}
+        </tr>
+        {{end}}
+    </tbody>
+</table>
+
+
+
+</body>
+</html>

@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Post</title>
+    <link rel="stylesheet" href="/static/home.css">
+    <script src="/static/scriptPost.js" defer></script>
+    <button onclick="window.location.href = '/';">Home Page</button>
+    <script>
+        // Function to send like/dislike reaction to the server
+        function reactToPost(username, postID, type) {
+            // Create a new XMLHttpRequest object
+            var xhr = new XMLHttpRequest();
+            
+            // Configure the request
+            xhr.open("POST", "/postreaction", true);
+            xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+            
+            // Define the data to be sent
+            var data = "username=" + encodeURIComponent(username) + "&post=" + encodeURIComponent(postID) + "&type=" + encodeURIComponent(type);
+            
+            // Send the request
+            xhr.send(data);
+            
+            // Listen for state changes
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === XMLHttpRequest.DONE) {
+                    if (xhr.status === 200) {
+                        // Request successful, do something if needed
+                        console.log("Reaction added successfully.");
+                    } else {
+                        // Request failed, handle error if needed
+                        console.error("Failed to add reaction:", xhr.status);
+                    }
+                }
+            };
+        }
+        function reactToComment(username, commentID, type) {
+            // Create a new XMLHttpRequest object
+            var xhr = new XMLHttpRequest();
+    
+            // Configure the request
+            xhr.open("POST", "/commentreaction", true);
+            xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+            // Define the data to be sent
+            var data = "username=" + encodeURIComponent(username) + "&comment=" + encodeURIComponent(commentID) + "&type=" + encodeURIComponent(type) + "&target=comment";
+    
+            // Send the request
+            xhr.send(data);
+    
+            // Listen for state changes
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === XMLHttpRequest.DONE) {
+                    if (xhr.status === 200) {
+                        // Request successful, do something if needed
+                        console.log("Reaction added to comment successfully.");
+                 } else {
+                        // Request failed, handle error if needed
+                        console.error("Failed to add reaction to comment:", xhr.status);
+            }
+        }
+    };
+}
+function reactAndRefresh(username, postID, type) {
+    // Call the reactToPost function
+    reactToPost(username, postID, type);
+
+    // Refresh the page after a short delay
+    setTimeout(function() {
+        location.reload();
+    }, 500); // Adjust the delay as needed
+}
+function reactAndRefreshComment(username, commentID, type) {
+    // Call the reactToComment function
+    reactToComment(username, commentID, type);
+
+    // Refresh the page after a short delay
+    setTimeout(function() {
+        location.reload();
+    }, 500); // Adjust the delay as needed
+}
+
+
+
+    </script>
+</head>
+<body>
+    {{ if .Message }}
+    <div class="message">{{ .Message }}</div>
+{{ end }}
+
+{{ $username := .User.Username }}
+
+{{ if .User.Username }}
+    <p>Logged in as: <a href="/profile?username={{.User.Username}}">{{.User.Username}}</a></p>
+{{ else }}
+    <p>Not logged in. Log in to comment!</p>
+{{ end }}
+
+{{ if not .User.Username }}
+    <!-- Show login/registration form only if the user is not logged in -->
+    <form action="/login" method="post">
+         <!-- Hidden input field to hold the current URL -->
+         <input type="hidden" name="redirect_url" value="{{ .CurrentURL }}">
+
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required><br><br>
+
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required><br><br>
+
+        <input type="submit" value="Login">
+    </form>
+
+{{ else }}
+
+<form action="/logout" method="post">
+    <input type="submit" value="Logout">
+</form>
+
+<!-- Button to open posting modal -->
+<button id="commentButton">Create Comment</button>
+
+<!-- Posting modal -->
+<div id="commentModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>Create Comment</h2>
+        <form action="/create-comment" method="post">       
+            <!-- Hidden input field to hold the postID -->
+            <input type="hidden" name="postID" value="{{ .Post.ID }}">
+            <!-- Hidden input field to hold the current URL -->
+            <input type="hidden" name="redirect_url" value="{{ .CurrentURL }}">
+            <label for="content">Content:</label><br>
+            <textarea id="content" name="content" rows="5" cols="50" required></textarea><br><br>
+            <input type="submit" value="Submit">
+        </form>
+    </div>
+</div>
+
+{{ end }}
+<hr>
+<h1>{{.Post.Title }}</h1>
+<table>
+    <thead>
+        <tr>
+            <th>Creator</th>
+            <th>Category</th>
+            <th>Content</th>
+            <th>Created</th>
+            <th>Likes</th>
+            <th>Dislikes</th>
+            <!-- Add more table headers as needed -->
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><a href="/profile?username={{.Post.Author}}">{{.Post.Author}}</a></td>
+            <td>{{.Post.Category}}</td>
+            <td>{{.Post.Content}}</td>
+            <td>{{.Post.Created}}</td>
+        {{ if $username }}               
+            <td><button id="likeButton{{.Post.ID}}" onclick="reactAndRefresh('{{ $username }}', '{{ .Post.ID }}', 'like')">Like</button>{{.Post.Likes}}</td>
+            <td><button id="dislikeButton{{.Post.ID}}" onclick="reactAndRefresh('{{ $username }}', '{{ .Post.ID }}', 'dislike')">Dislike</button>{{.Post.Dislikes}}</td>
+        {{ else }}
+            <td>{{ .Post.Likes }}</td>
+            <td>{{ .Post.Dislikes }}</td>
+        {{ end }}
+        </tr>
+    </tbody>
+    </table>
+    <h2>Comments</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Creator</th>
+                <th>Created At</th>
+                <th>Comment</th>
+                <th>Likes</th>
+                <th>Dislikes</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{range .Comments}}
+            <tr>
+                <td><a href="/profile?username={{.Author}}">{{.Author}}</a></td>
+                <td>{{.Created}}</td>
+                <td>{{.Content}}</td>
+            {{ if $username }} 
+                <td><button id="likeButton{{.ID}}" onclick="reactAndRefreshComment('{{ $username }}', '{{ .ID }}', 'like')">Like</button>{{.Likes}}</td>
+                <td><button id="dislikeButton{{.ID}}" onclick="reactAndRefreshComment('{{ $username }}', '{{ .ID }}', 'dislike')">Dislike</button>{{.Dislikes}}</td>
+            {{ else }}
+                <td>{{ .Likes }}</td>
+                <td>{{ .Dislikes }}</td>
+            {{ end }}
+            </tr>
+            {{end}}
+        </tbody>
+    </table>
+   
+</body>
+</html>

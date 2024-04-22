@@ -1,0 +1,1004 @@
+/* Modal styles */
+.modal {
+    display: none; /* Initially hide the modal */
+    position: fixed; 
+    z-index: 1; 
+    left: 0;
+    top: 0;
+    width: 100%; 
+    height: 100%;
+    overflow: auto; 
+    background-color: rgba(0,0,0,0.4); 
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%; 
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+/* Add this CSS to your existing home.css or style sheet */
+
+.login-form {
+    display: flex;
+    flex-wrap: nowrap; /* Prevent wrapping of elements */
+    align-items: center; /* Align items vertically */
+}
+
+.login-form input,
+.login-form button {
+    margin-right: 10px; /* Add some spacing between elements */
+}
+
+/* Add horizontal dividing line style */
+.divider {
+    border-top: 1px solid #ccc;
+    margin: 20px 0; /* Adjust spacing as needed */
+}
+
+
+.header-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 80%; /* Adjust width as needed */
+    margin: 0 auto; /* Center the header container */
+}
+
+.posts-header {
+    margin-bottom: 10px;
+    border-bottom: 1px solid #ccc; /* Add a border */
+}
+
+.filter-form {
+    display: flex;
+    align-items: center;
+}
+
+/* Adjust margin between header and filter form */
+.posts-header {
+    margin-bottom: 10px;
+}
+table.grid {
+    width: 100%; /* Adjust the width to take the full width of the screen */
+    border-collapse: collapse;
+    border: hidden;
+    margin: 0;
+}
+
+table.grid tr th {
+    background: var(--MenuBG);
+    font-size: medium;
+    text-align: center;
+    color: var(--MenuText);
+    width: auto; /* Remove fixed width for table headers */
+}
+
+table.grid tr td {
+    background: var(--MsgBG);
+    font-size: small;
+    padding: 0 3px 1px 3px;
+    /* transition: background 1s; */
+    width: auto; /* Remove fixed width for table cells */
+}
+
+
+
+/*test*/
+
+:root {
+    --MenuText: #dde3eb;
+--MsgTopHL: #8d98c9;
+--Footnote: #8a8a8a;
+--Unvisited: #000000;
+--TopbarBG: #24649a;
+--NextpageBG: #fcffb3;
+--MenuBG: #4b73aa;
+--QuoteTop: #a7bdde;
+--ErrorText: #ff0000;
+--DimLink: #8279ae;
+--QuoteBar: #a7bdde;
+--InputText: #000000;
+--MsgBG: #dde3eb;
+--Text: #000000;
+--MsgTop: #6896d5;
+--Visited: #000099;
+--ActiveThread: #dfe3ef;
+--QuoteBorder: #cfcfcf;
+--NextpageBorder: #d1d394;
+--MenuActive: #ff0080;
+--MenuHover: #ffffff;
+--DangerLink: #9c1f1f;
+--BG: #cfcfcf;
+--UserbarBG: #2e5a7f;
+--QuoteBG: #e5e8ed;
+--InputBG: #ffffff;
+
+    --EmojiHover: var(--Footnote);
+}
+
+@font-face {
+    font-family: UnifrakturMaguntia;
+    src: url(https://lore.capital/static/UnifrakturMaguntia.ttf);
+    font-display: swap;
+}
+
+/* stolen from ll */ 
+body, table.classic tr td {
+    background: var(--BG);
+    color: var(--Text);
+    font-family: "Arial", sans-serif;
+    font-size: small
+}
+
+textarea {
+    font-family: "Arial", sans-serif;
+    font-size: small
+}
+
+textarea.locked {
+    background: var(--BG);
+}
+
+body.regular, body.classic {
+    margin: 0;
+    margin-bottom: 25px;
+}
+
+body.regular .body {
+    padding: 9px
+}
+
+img {
+    border: 0
+}
+
+a {
+    color: var(--Unvisited, var(--Text));
+}
+
+a:visited {
+    color: var(--Visited);
+}
+
+
+a.count-link {
+    text-decoration: none;
+}
+a.count-link:not(.active-link) .count-body {
+    text-decoration: underline;
+}
+a.count-link .count-n {
+    text-decoration: none;
+}
+
+.footnote {
+    color: var(--Footnote);
+}
+
+.footnote :is(a, a:visited) {
+    color: var(--Footnote);
+    font-weight: bold;
+}
+
+.error {
+    color: var(--ErrorText);
+}
+
+a span.m {
+    position: relative;
+    top: -3px !important;
+    top: 0;
+    height: 10px;
+    font-size: 6pt;
+    margin: 0 1px;
+    padding-left: 10px;
+    border-bottom: 2px dotted var(--Unvisited, var(--Text));
+    color: var(--Unvisited, var(--Text));
+}
+
+a:visited span.m {
+    border-bottom: 2px dotted var(--Visited);
+}
+
+a span.m span {
+    font-size: 0
+}
+
+ins {
+    /* background-color: #dfd; */
+    border: 1px dashed green;
+    background-color: rgb(114 208 91 / 26%);
+}
+
+ins.pair {
+    border-left: 0 solid red
+}
+
+ins img {
+    border: 3px solid green
+}
+
+del, ins {
+    padding: 0 2px;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+/* thanks MDN */
+kbd {
+    background-color: #eee;
+    border-radius: 3px;
+    border: 1px solid #b4b4b4;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2), 0 2px 0 0 rgba(255, 255, 255, 0.7) inset;
+    color: #333;
+    display: inline-block;
+    /*font-size: 0.85em;*/
+    min-width: 1em;
+    text-align: center;;
+    font-weight: 700;
+    line-height: 1;
+    padding: 2px 4px;
+    white-space: nowrap;
+    font-family: system-ui;
+}
+
+:is(.message, article.wiki) :is(h1, h2, h3, h4, h5, h6)[id]:hover {
+    cursor: pointer;
+}
+
+:is(.message, article.wiki) :is(h1, h2, h3, h4, h5, h6)[id]:hover::after {
+    content: " #";
+    font-size: smaller;
+    font-style: normal;
+    font-weight: normal;
+}
+
+input[type="text"], input[type="password"], input[type="email"], input[type="search"], select, textarea {
+    background: var(--InputBG);
+    color: var(--InputText);
+}
+
+input [type="text"] {
+    border: 1px solid;
+    padding: 4px 1px
+}
+
+input[type="text"]:user-invalid {
+    border: 1px dashed var(--ErrorText, red);
+}
+input[type="text"]:not(:user-invalid) {
+    border: 1px solid var(--Text, black);
+}
+
+h1, h2, h3 {
+    font-weight: bold;
+    margin: 3px 0;
+    text-align: center
+}
+
+h1 {
+    font-size: x-large;
+    font-style: italic;
+    margin-top: 12px
+}
+
+h2 {
+    font-size: large;
+}
+
+h3 {
+    font-size: medium;
+    text-align: left;
+    margin: 0
+}
+
+hr {
+    height: 1px;
+    border: 0;
+    background: var(--Text);
+}
+
+small {
+    font-size: x-small;
+}
+
+div.menubar, div.userbar, div.topbar, div.infobar, .message, div.message-top {
+    margin: 2px 0
+}
+
+div.menubar, div.userbar, div.topbar, div.infobar {
+    font-weight: bold;
+    font-size: larger;
+    color: var(--MenuText);
+    padding: 1px 3px;
+    text-align: center
+}
+
+div.menubar {
+    margin-top: 0;
+    background: var(--MenuBG);
+}
+
+div.userbar {
+    background: var(--UserbarBG);
+}
+
+div.topbar {
+    background: var(--TopbarBG);
+}
+
+div.infobar {
+    background: var(--MenuBG);
+}
+
+.message, div.message-top {
+    padding: 0 3px;
+    font-size: small;
+}
+
+.user-icon {
+    color: var(--MenuText);
+}
+
+.message a, article a {
+    color: var(--Unvisited, var(--MsgLink, var(--Text)));
+}
+
+.message a:visited, article a:visited {
+    color: var(--MsgVisited, var(--Visited));
+}
+
+article .content a:not([href^='/wiki/article/']):not([href='#'], [href='/#']) {
+    text-decoration-style: dotted;
+}
+
+article.wiki a[href^='/wiki/article/'], a[href^='/wiki/article/'] {
+    color: var(--Unvisited);
+    text-decoration-color: var(--Visited);
+}
+/*
+a[href^='/wiki/article/']:hover {
+    text-decoration-style: solid;
+}
+*/
+
+.article-edit-nav {
+    margin-bottom: 1px;
+}
+
+article.wiki .article-edit-nav a {
+    color: var(--Text);
+    text-decoration: none;
+    font-weight: normal;
+}
+
+article.wiki .article-edit-nav a:hover .text {
+    color: var(--Visited);
+    text-decoration: underline;
+    text-decoration-color: var(--Visited);
+}
+
+article.wiki .article-edit-nav a:hover .arrow {
+    color: var(--Unvisited);
+}
+
+.message pre, article pre {
+    font-size: medium;
+    white-space: pre;
+    overflow: auto;
+    word-break: keep-all;
+    overflow-wrap: normal;
+    max-width: 80vw;
+    padding: 1ch;
+}
+
+pre, textarea {
+    tab-size: 4;
+}
+
+.message p {
+    overflow-wrap: break-word;
+    word-break: break-word;
+}
+
+.message p:not(.msg-quote > p:first-child)  {
+    max-width: 80vw;
+}
+
+.message.noavs p {
+    max-width: 100%;
+}
+
+:is(.message-top, .userpic) .pronouns {
+    font-size: smaller;
+}
+
+.reply-nest {
+    border-left: 3px dashed var(--MsgTop);
+    padding-left: 5px
+}
+
+table.message-body tr td.message, div.message, table.message-body tr td.userpic {
+    background: var(--MsgBG);
+    overflow: visible
+}
+
+div.message-top {
+    background: var(--MsgTop);
+}
+
+.message-container:target div.message-top {
+    background: var(--MsgTopHL, var(--ActiveThread));
+}
+
+.user-title {
+    word-break: break-word;
+    font-size: initial;
+}
+
+.spoiler_closed {
+    margin-block-start: 1em;
+}
+
+.spoiler_closed .caption {
+    white-space: nowrap;
+}
+
+.spoiler_closed .spoiler_on_open {
+    display: none;
+}
+
+.spoiler_opened .spoiler_on_close {
+    display: none;
+}
+
+details.attachment {
+    margin-top: 0.5em;
+    border: 1px solid var(--Text);
+}
+
+details.attachment summary {
+    cursor: pointer;
+    padding: 0.3em;
+    line-height: 1em;
+    background: var(--MenuBG);
+    color: var(--MenuText);
+}
+
+details summary {
+    cursor: pointer;
+}
+
+details summary:hover {
+    text-decoration: underline;
+}
+
+details.attachment[open] summary {
+    border-bottom: 2px solid var(--BG);
+}
+
+details.attachment .inner {
+    padding: 0.5em 0.5em 0;
+}
+
+span.attachment a {
+    text-decoration: none;
+}
+
+span.attachment a .filename {
+    text-decoration: underline;
+}
+
+div.menubar a, div.userbar a, div.infobar a, div.topbar a, table.classic tr th a, table.grid tr th a {
+    color: var(--MenuText);
+}
+
+div.menubar a:visited, div.userbar a:visited, div.topbar a:visited, div.infobar a:visited,
+table.classic tr th a:visited, table.grid tr th a:visited {
+    color: var(--MenuText);
+}
+
+div.menubar a:hover, div.userbar a:hover, div.topbar a:hover, div.infobar a:hover, table.classic tr th a:hover,
+table.grid tr th a:hover {
+    color: var(--MenuHover);
+}
+
+div.menubar a:active, div.userbar a:active, div.topbar a:active, div.infobar a:active,
+table.classic tr th a:active, table.grid tr th a:active {
+    color: var(--MenuActive);
+}
+
+table.grid {
+    width: 100%;
+    border-collapse: collapse;
+    border: hidden;
+    margin: 0
+}
+
+table.grid tr td, table.grid tr th {
+    border: 2px solid var(--BG);
+    border-width: 0 2px 2px 0
+}
+
+table.grid tr td {
+    background: var(--MsgBG);
+    font-size: small;
+    padding: 0 3px 1px 3px;
+    /* transition: background 1s; */
+}
+
+table.grid tr.active-thread td {
+    background: var(--ActiveThread);
+}
+
+table.grid tr th {
+    background: var(--MenuBG);
+    font-size: medium;
+    text-align: center;
+    color: var(--MenuText);
+}
+
+table.grid tr td.sticky {
+    font-weight: bold
+}
+
+table.grid tr td.closed, span.closed {
+    background-image: url('//lore.capital/static/closed.gif') !important;
+    background-position: 3px center;
+    background-repeat: no-repeat;
+    padding-left: 18px;
+}
+
+table.grid:not([data-mode=hiding]) tr td .post-counts,
+table.grid[data-mode=hiding] tr td .thread-hide {
+    display: revert;
+}
+table.grid[data-mode=hiding] tr td .post-counts,
+table.grid:not([data-mode=hiding]) tr td .thread-hide {
+    display: none;
+}
+.thread-hide button {
+    width: 8ch;
+    padding: 0;
+}
+.thread-hide button.hidden .when-hidden,
+.thread-hide button:not(.hidden) .when-unhidden {
+    display: revert;
+}
+.thread-hide button:not(.hidden) .when-hidden,
+.thread-hide button.hidden .when-unhidden {
+    display: none;
+}
+
+.pr {
+    font-family: monospace;
+    white-space: pre
+}
+
+.pr br {
+    display: none
+}
+
+blockquote {
+    margin: 0;
+    padding-left: 6px;
+    border-left: 2px solid var(--MsgTop);
+    /* border-left: 2px solid var(--QuoteTop, var(--MsgTop)); */
+}
+
+blockquote.msg-quote {
+    background: var(--QuoteBG, var(--MsgBG));
+    border-left: 2px solid var(--QuoteBar, var(--QuoteTop, var(--MsgTop)));
+    border-right: 1px solid var(--QuoteBorder, var(--BG));
+    border-bottom: 1px solid var(--QuoteBorder, var(--BG));
+}
+
+blockquote.msg-quote blockquote.msg-quote {
+    opacity: 0.9125;
+}
+
+/*
+blockquote.msg-quote blockquote.msg-quote:hover {
+    opacity: 1;
+}
+*/
+
+blockquote.msg-quote blockquote {
+    margin: 1ch;
+}
+
+blockquote.msg-quote .spoiler_on_open > blockquote {
+    margin: 0;
+    border-left: none;
+}
+
+blockquote.msg-quote > p:first-child {
+    background: var(--QuoteTop, var(--MsgTop));
+    margin-left: -6px;
+    padding-left: 2px;
+}
+
+/* this is the limit, lol */
+blockquote > blockquote > blockquote > blockquote > blockquote > blockquote > blockquote > blockquote > blockquote > blockquote > blockquote > blockquote > blockquote > blockquote {
+    visibility: hidden;
+}
+
+@supports (background-color: color-mix(in srgb, #34c9eb 75%, white)) {
+    .message blockquote.msg-quote > p:first-child {
+        background: var(--QuoteTop, color-mix(in srgb, var(--MsgTop), transparent));
+    }
+}
+
+@supports not (background-color: color-mix(in srgb, #34c9eb 75%, white)) {
+    .message blockquote.msg-quote > p:first-child {
+        opacity: 0.9125;
+    }
+}
+
+blockquote > p {
+    margin: 0;
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+}
+
+blockquote.gold {
+    /*border-color: var(--GoldBorder, #D4AF37);*/
+    animation: goldanim 1s infinite;
+    animation-timing-function: ease-in;
+    animation-direction: alternate;
+}
+
+span.goldtext {
+    animation: gold-glow 3s infinite;
+    animation-timing-function: ease-in-out;
+    animation-direction: alternate;
+}
+
+@keyframes goldanim {
+    0% {
+        border-color: var(--GoldBorder1, #DA9100);
+    }
+    50% {
+        border-color: var(--GoldBorder2, #D4AF37);
+    }
+    100% {
+        border-color: var(--GoldBorder3, #FFDF00);
+    }
+}
+
+@keyframes gold-glow {
+    0% {
+      text-shadow: 0 0 8px #FFD700;
+    }
+    50% {
+      text-shadow: 0 0 20px #FFD700, 0 0 30px #FFA500, 0 0 40px #FFA500;
+    }
+    100% {
+      text-shadow: 0 0 8px #FFD700;
+    }
+  }
+
+.message blockquote img, .message blockquote video, .message img.shrunk {
+    max-width: min(360px, 100%);
+    max-height: min(360px, 100%);
+    height: auto;
+    object-fit: scale-down;
+    object-position: left center;
+}
+
+.message img.shrunk {
+    cursor: pointer;
+}
+
+.message blockquote img.expanded {
+    max-width: 100%;
+    max-height: unset;
+    height: auto;
+    cursor: pointer;
+}
+
+.message .message-top {
+    background-color: transparent;
+    padding-left: 0
+}
+
+#reply-area {
+    border-top: 2px solid var(--BG);
+}
+
+#reply-area, #pages, #socket-status, #socket-status + .userbar {
+    z-index: 10;
+    isolation: isolate;
+}
+
+#reply-area.sticky {
+    touch-action: none;
+}
+
+#reply-area.sticky textarea {
+    touch-action: pan-y;
+    overscroll-behavior: none;
+}
+
+#nextpage {
+    z-index: 2;
+    position: relative;
+}
+
+#reply-close, #reply-delete {
+    background: var(--MenuBG);
+    color: var(--MenuText);
+    border-left: 1px solid var(--BG);
+    align-self: stretch;
+    padding: 0 1ch;
+    cursor: pointer;
+}
+
+.hoverbutton:hover {
+    translate: -1px -1px;
+}
+
+:is(#reply-close, #reply-delete) > div {
+    align-self: center;
+}
+
+.reply-top {
+    display: flex;
+    align-items: center;
+    border-bottom: 2px solid var(--BG);
+}
+
+.reply-menu {
+    flex: 1;
+    padding-left: 2px;
+    background: var(--MsgTop);
+}
+
+#reply-area preview {
+    background: var(--MsgBG);
+}
+
+.reply-form-box {
+    display: flex;
+    flex-wrap: wrap;
+    row-gap: 1em;
+    column-gap: 1em;
+}
+
+.reply-form-box form {
+    flex: 1;
+    margin: 0;
+}
+
+.reply-form-box textarea {
+    width: 100%;
+    height: 20ch;
+}
+
+#reply-area .reply-help {
+    margin-right: 1em;
+}
+
+#reply-area :is(button, input[type=submit], input[type=file]) {
+    appearance: button;
+}
+
+#reply-floater {
+    position: fixed;
+    right: 1em;
+    bottom: 5vh;
+    height: 3em;
+    width: 3em;
+    /* z-index: 5; */
+}
+
+@media (hover: hover) {
+    #reply-floater {
+        display: none;
+    }
+}
+
+#reply-floater button {
+    width: 100%;
+    height: 100%;
+    text-align: center;
+}
+
+.preview {
+    overflow: auto;
+}
+
+.sticky {
+    position: -webkit-sticky;
+    position: sticky;
+}
+
+form.inline {
+    margin: 0;
+    display: inline-block;
+}
+
+table.message-body {
+    border-collapse: collapse;
+    margin: 0;
+    width: 100%;
+}
+
+.message:not(.preview) {
+    padding: 5px;
+    position: relative;
+}
+
+.message .message-contents > *:first-child {
+    margin-top: 0;
+}
+
+.message .message-contents > *:last-child {
+    margin-bottom: 1.25em;
+}
+
+/* fix empty <p>s at end of messages */
+.message .message-contents > *:last-child:empty:not(:first-child) {
+    margin-bottom: 0;
+}
+.message .message-contents > *:last-child:empty:not(:first-child):after {
+  content: "";
+  display: inline-block;
+  width: 0px;
+}
+
+/* blankposts */
+.message .message-contents:empty:not(.preview) {
+    height: 1em;
+}
+
+.message .emoji-bar {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    min-height: 1em;
+    text-align: right;
+}
+
+.message .emoji-bar a {
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+.message .emoji-bar a:hover {
+    text-decoration: none;
+    box-shadow: 2px 2px var(--EmojiHover, gray);
+    background: #c8ced5;
+}
+
+.emoji-bar select:disabled {
+    opacity: 0.2;
+    cursor: wait;
+}
+
+a .emoji-text {
+    font-size: 1.25em;
+    color: var(--Text);
+}
+
+.emoji-box {
+    box-sizing: content-box;
+    -webkit-touch-callout: none;
+}
+.emoji-box.me {
+    background-color: rgba(150, 150, 150, 0.3);
+    border: 2px solid var(--EmojiHover, gray);
+}
+
+.message .replies-bar {
+    color: var(--Footnote);
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    min-height: 1em;
+    text-align: left;
+}
+
+.message .replies-bar .icon {
+    color: var(--Footnote);
+    font-size: larger;
+}
+
+.message .replies-bar a {
+    color: var(--Footnote);
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+.message .replies-bar a:visited {
+    color: var(--Footnote);
+}
+
+.message h1, .message h2, .message h3,
+article h1, article h2, article h3 {
+    font-weight: bold;
+    margin: 1em 0;
+    text-align: left;
+}
+
+.message h1 {
+    font-size: large;
+    font-style: normal;
+    margin-top: 12px
+}
+
+article h1 {
+    font-style: normal;
+    word-wrap: break-word;
+    margin-top: 1em;
+}
+
+article h2, article h3 {
+    margin-top: 0.6em;
+}
+
+article h4, article h5 {
+    margin-top: 0.3em;
+}
+
+.message h2 {
+    font-size: medium;
+}
+
+.message h3 {
+    font-size: larger;
+    margin: 0
+}
+
+.message table, article table {
+    font-size: small;
+    margin-bottom: 1em;
+    border-collapse: collapse;
+    border: 1px solid var(--BG);
+}
+
+.message table th, .message table td, article table th, article table td {
+    padding: 0.2em;
+    border: 1px solid var(--BG);
+}
+
+.indexmotd.message table {
+    font-size: small;
+    border: none;
+    table-layout: fixed;
+    font-size: small;
+    margin-bottom: 0;
+}
+
+.indexmotd.message table th, .indexmotd.message table td {
+    border: none;
+}
+
+table.alignment, table.alignment tr td {
+    border: none;
+    margin-bottom: 0;
+}
+
+.message .ascii, article .ascii {
+  white-space: pre;
+  overflow: auto;
+  word-break: keep-all;
+  overflow-wrap: normal;
+}
+
