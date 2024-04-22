@@ -21,3 +21,7 @@ It is a website that showcases information about different car models, their spe
 ### Fifth Task **the Stations-Pathfinder**
 
 It is a pathfinding program which uses two algorithms to determine the most efficient paths on a map and then to dispatch the trains on the determined paths without crashing them. There are four inputs, the railway map file, the first station, the last station and the number of trains. 
+
+### Sixth Task **the Literary-Lions-Forum**
+
+It is a digital forum that allows for user registration, post creation, sharing and reaction. It is a program built on a SQLite database. It consists of three layers, the first is a function that creates a database file, the second layer is an API that pulls and pushes data from and into that database and a main server that serves between the front-end HTML and the back-end API. 
